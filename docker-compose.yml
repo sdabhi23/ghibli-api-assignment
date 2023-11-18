@@ -1,0 +1,16 @@
+version: "3.6"
+
+services:
+  memcached:
+    container_name: ghibli-memcached
+    image: memcached:1.6.22-alpine
+    ports:
+      - 11211:11211
+
+  server:
+    container_name: ghibli-server
+    build: .
+    ports:
+      - 8000:8000
+    environment:
+      - MEMCACHED_URL=memcached:11211

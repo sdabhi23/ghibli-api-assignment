@@ -21,3 +21,11 @@ def page_not_found_error(request, *args, **kwargs):
     """
     data = {"detail": "Not Found.", "status_code": status.HTTP_404_NOT_FOUND}
     return JsonResponse(data, status=status.HTTP_404_NOT_FOUND)
+
+
+def internal_server_error(request, *args, **kwargs):
+    """
+    Generic 500 error handler.
+    """
+    data = {"detail": "Internal Server Error.", "status_code": status.HTTP_500_INTERNAL_SERVER_ERROR}
+    return JsonResponse(data, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

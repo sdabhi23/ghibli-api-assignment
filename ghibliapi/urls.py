@@ -20,6 +20,7 @@ from drf_spectacular.views import SpectacularRedocView, SpectacularSwaggerView, 
 from api import views
 
 handler404 = "ghibliapi.exceptions.page_not_found_error"
+handler500 = "ghibliapi.exceptions.internal_server_error"
 
 urlpatterns = [
     path("", views.root, name="api"),
