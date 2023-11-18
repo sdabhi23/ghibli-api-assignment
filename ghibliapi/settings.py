@@ -78,9 +78,6 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "ghibliapi.exceptions.json_exception_handler",
 }
 
-API_KEY_CUSTOM_HEADER = "HTTP_GHIBLIKEY"
-
-
 SPECTACULAR_SETTINGS = {
     "TITLE": "Your Project API",
     "DESCRIPTION": "Your project description",

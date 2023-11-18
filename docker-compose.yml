@@ -14,3 +14,13 @@ services:
       - 8000:8000
     environment:
       - MEMCACHED_URL=memcached:11211
+    depends_on:
+      - memcached
+
+  test_server:
+    container_name: ghibli-test-server
+    build: .
+    environment:
+      - MEMCACHED_URL=memcached:11211
+    depends_on:
+      - memcached
