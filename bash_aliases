@@ -1,1 +1,0 @@
-manage="python3 /mnt/c/Users/shrey/Desktop/ghibliapi/manage.py"

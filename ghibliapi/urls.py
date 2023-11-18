@@ -18,8 +18,14 @@ from django.urls import path
 from api import views
 from drf_spectacular.views import SpectacularRedocView, SpectacularSwaggerView, SpectacularAPIView
 
+handler400 = "api.exceptions.error_handler"
+handler403 = "api.exceptions.error_handler"
+handler404 = "api.exceptions.error_handler"
+handler500 = "api.exceptions.error_handler"
+
 urlpatterns = [
     path("", views.root),
+    path("films/", views.ghibli_films),
     path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/schema/swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
     path("api/schema/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),

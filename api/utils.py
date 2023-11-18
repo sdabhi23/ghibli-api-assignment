@@ -1,0 +1,48 @@
+from urllib.parse import urlparse, parse_qs
+
+import requests
+from requests import Response
+
+FILMS_BASE = "https://ghibli.rest/films"
+
+
+def get_ghibli_films():
+    films_response: Response = requests.get(FILMS_BASE)
+    films: dict = films_response.json()
+
+    people_url_set: set = set()
+
+    # one person could be part of multiple films
+    # here we create a set of person urls to reduce the number of calls to the person api
+    for film in films:
+        people_url_set.update(film["people"])
+
+    # query the person api and create a map of person url and person details
+    people_map: dict = {}
+    for person_url in people_url_set:
+        parsed_person_url = urlparse(person_url)
+        query_string_map = parse_qs(parsed_person_url.query, keep_blank_values=True)
+        # to ensure we don't query the person endpoint without any ids
+        if len(list(filter(lambda x: x != "", query_string_map.get("id")))) > 0:
+            person_response = requests.get(person_url)
+            person = person_response.json()
+            people_map[person_url] = person[0]
+
+    for film in films:
+        actors = []
+        for person_url in film["people"]:
+            actor = people_map.get(person_url, {"id": -1, "name": "Foo", "species": "bar", "url": "https://shreydabhi.dev"})
+            actors.append(
+                {
+                    "id": actor["id"],
+                    "name": actor["name"],
+                    "species": actor["species"],
+                    "url": actor["url"],
+                }
+            )
+
+        film["actors"] = actors
+
+        film.pop("people", None)
+
+    return films
