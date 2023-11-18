@@ -1,0 +1,17 @@
+version: "3.6"
+
+services:
+  test_memcached:
+    container_name: ghibli-test-memcached
+    image: memcached:1.6.22-alpine
+    ports:
+      - 11211:11211
+
+  test_server:
+    container_name: ghibli-test-server
+    build: .
+    environment:
+      - MEMCACHED_URL=memcached:11211
+      - ENV=TEST
+    depends_on:
+      - test_memcached
