@@ -22,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = "django-insecure-k+m5!r4whk(i-h-$u+)o2+-l+hc)ktoh-^9lx=x)om#koi0bpt"
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["localhost"]
 
@@ -75,6 +75,7 @@ WSGI_APPLICATION = "ghibliapi.wsgi.application"
 REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_RENDERER_CLASSES": ["rest_framework.renderers.JSONRenderer"],
+    "EXCEPTION_HANDLER": "ghibliapi.exceptions.json_exception_handler",
 }
 
 API_KEY_CUSTOM_HEADER = "HTTP_GHIBLIKEY"
