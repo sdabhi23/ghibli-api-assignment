@@ -1,3 +1,4 @@
+import logging
 from urllib.parse import urlparse, parse_qs
 
 import requests
@@ -7,8 +8,11 @@ FILMS_BASE = "https://ghibli.rest/films"
 
 
 def get_ghibli_films():
+    logging.info("Fetching data from Ghibli APIs")
     films_response: Response = requests.get(FILMS_BASE)
     films: dict = films_response.json()
+
+    logging.info("Fetched all films")
 
     people_url_set: set = set()
 
@@ -17,6 +21,7 @@ def get_ghibli_films():
     for film in films:
         people_url_set.update(film["people"])
 
+    logging.info("Fetching people data")
     # query the person api and create a map of person url and person details
     people_map: dict = {}
     for person_url in people_url_set:
@@ -28,18 +33,20 @@ def get_ghibli_films():
             person = person_response.json()
             people_map[person_url] = person[0]
 
+    logging.info("Preparing API response")
     for film in films:
         actors = []
         for person_url in film["people"]:
-            actor = people_map.get(person_url, {"id": -1, "name": "Foo", "species": "bar", "url": "https://shreydabhi.dev"})
-            actors.append(
-                {
-                    "id": actor["id"],
-                    "name": actor["name"],
-                    "species": actor["species"],
-                    "url": actor["url"],
-                }
-            )
+            actor = people_map.get(person_url, None)
+            if actor is not None:
+                actors.append(
+                    {
+                        "id": actor["id"],
+                        "name": actor["name"],
+                        "species": actor["species"],
+                        "url": actor["url"],
+                    }
+                )
 
         film["actors"] = actors
 
