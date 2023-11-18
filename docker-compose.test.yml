@@ -11,7 +11,7 @@ services:
     container_name: ghibli-test-server
     build: .
     environment:
-      - MEMCACHED_URL=memcached:11211
+      - MEMCACHED_URL=test_memcached:11211
       - ENV=TEST
     depends_on:
       - test_memcached
