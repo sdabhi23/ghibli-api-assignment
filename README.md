@@ -15,3 +15,5 @@ Run the following command after that to run the sever:
 ```shell
 docker compose -f docker-compose.yml up -d
 ```
+
+Swagger UI is available at <http://localhost:8000/swagger-docs>

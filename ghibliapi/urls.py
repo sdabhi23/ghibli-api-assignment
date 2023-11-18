@@ -14,10 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.urls import path
-from drf_spectacular.views import SpectacularRedocView, SpectacularSwaggerView, SpectacularAPIView
+from drf_spectacular.views import SpectacularSwaggerView, SpectacularAPIView
 
 from api import views
+from ghibliapi import settings
 
 handler404 = "ghibliapi.exceptions.page_not_found_error"
 handler500 = "ghibliapi.exceptions.internal_server_error"
@@ -25,7 +27,7 @@ handler500 = "ghibliapi.exceptions.internal_server_error"
 urlpatterns = [
     path("", views.root, name="api"),
     path("films/", views.ghibli_films, name="api-films"),
-    path("api/schema/", SpectacularAPIView.as_view(), name="schema"),
-    path("api/schema/swagger-ui/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
-    path("api/schema/redoc/", SpectacularRedocView.as_view(url_name="schema"), name="redoc"),
+    path("schema/", SpectacularAPIView.as_view(), name="schema"),
+    path("swagger-docs/", SpectacularSwaggerView.as_view(url_name="schema"), name="swagger-ui"),
 ]
+# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

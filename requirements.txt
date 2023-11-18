@@ -1,7 +1,7 @@
 django==4.1.13
 djangorestframework==3.14.0
 requests==2.31.0
-drf-spectacular[sidecar]==0.26.5
+drf-spectacular==0.26.5
 black==23.11.0
 pymemcache==4.0.0
 gunicorn==21.2.0

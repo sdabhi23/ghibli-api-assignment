@@ -7,11 +7,20 @@ services:
     ports:
       - 11211:11211
 
+  nginx:
+    container_name: ghibli-nginx
+    build:
+      context: .
+      dockerfile: DockerfileNginx
+    ports:
+      - 8000:80
+
+
   server:
     container_name: ghibli-server
-    build: .
-    ports:
-      - 8000:8000
+    build:
+      context: .
+      dockerfile: Dockerfile
     environment:
       - MEMCACHED_URL=memcached:11211
       - GHIBLI_APIKEY=c62599c3-cd12-4ec9-9b11-ce4156be4bd1
