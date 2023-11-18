@@ -50,6 +50,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "ghibliapi.middleware.LoggingMiddleware",
 ]
 
 ROOT_URLCONF = "ghibliapi.urls"
@@ -112,6 +113,18 @@ CACHES = {
         "BACKEND": "django.core.cache.backends.memcached.PyMemcacheCache",
         "LOCATION": "127.0.0.1:11211",
     }
+}
+
+LOGGING = {
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "simple": {"format": "[%(asctime)s] %(levelname)s %(filename)s:%(lineno)d %(message)s"},
+    },
+    "handlers": {
+        "console": {"level": "INFO", "class": "logging.StreamHandler", "formatter": "simple"},
+    },
+    "loggers": {"": {"handlers": ["console"], "propogate": True, "level": "INFO"}},
 }
 
 # Database
