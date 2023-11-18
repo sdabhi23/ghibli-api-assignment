@@ -3,6 +3,8 @@ from typing import Optional, Any
 from django.http import HttpRequest
 from rest_framework import permissions
 
+from ghibliapi import settings
+
 
 class HasAPIKey(permissions.BasePermission):
     def get_key(self, request: HttpRequest) -> Optional[str]:
@@ -16,4 +18,4 @@ class HasAPIKey(permissions.BasePermission):
         return self.key_is_valid(key)
 
     def key_is_valid(self, apikey: str) -> bool:
-        return apikey == "ePohkQbd.idf39O0D2sobbkD5FuaNvy3384B9UgjG"
+        return apikey == settings.GHIBLI_APIKEY

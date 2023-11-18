@@ -1,6 +1,8 @@
 from rest_framework import status
 from rest_framework.test import APITestCase
 
+from ghibliapi import settings
+
 
 class GhibliTests(APITestCase):
     def test_root(self):
@@ -15,6 +17,12 @@ class GhibliTests(APITestCase):
         response = self.client.get("/films/")
         self.assertEqual(response.status_code, status.HTTP_403_FORBIDDEN)
 
-    def test_films_with_apikey(self):
-        response = self.client.get("/films/", HTTP_GHIBLIKEY="ePohkQbd.idf39O0D2sobbkD5FuaNvy3384B9UgjG")
+    def test_films_response(self):
+        response = self.client.get("/films/", HTTP_GHIBLIKEY=settings.GHIBLI_APIKEY)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+        data = response.json()
+        self.assertEqual(len(data), 5)
+
+        for film in data:
+            self.assertIn("actors", list(film.keys()))

@@ -155,3 +155,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+GHIBLI_APIKEY = os.environ.get("GHIBLI_APIKEY", "ePohkQbd.idf39O0D2sobbkD5FuaNvy3384B9UgjG")

@@ -1,4 +1,5 @@
 import logging
+import os
 from urllib.parse import urlparse, parse_qs
 
 import requests
@@ -10,7 +11,12 @@ FILMS_BASE = "https://ghibli.rest/films"
 def get_ghibli_films():
     logging.info("Fetching data from Ghibli APIs")
     films_response: Response = requests.get(FILMS_BASE)
-    films: dict = films_response.json()
+    films: list = films_response.json()
+
+    if os.environ.get("ENV", "DEV") == "TEST":
+        logging.info("====> Running tests")
+        logging.info("====> Reducing number of films being used to 5")
+        films = films[:5]
 
     logging.info("Fetched all films")
 

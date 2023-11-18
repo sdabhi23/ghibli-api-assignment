@@ -14,6 +14,8 @@ services:
       - 8000:8000
     environment:
       - MEMCACHED_URL=memcached:11211
+      - GHIBLI_APIKEY=c62599c3-cd12-4ec9-9b11-ce4156be4bd1
+      - ENV=PROD
     depends_on:
       - memcached
 
@@ -22,5 +24,6 @@ services:
     build: .
     environment:
       - MEMCACHED_URL=memcached:11211
+      - ENV=TEST
     depends_on:
       - memcached
